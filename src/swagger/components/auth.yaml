@@ -1,0 +1,29 @@
+signin:
+  type: object
+  properties:
+    email:
+      type: string
+      required: true
+    password:
+      type: string
+      required: true
+  required:
+    - email
+    - password
+
+signup:
+  type: object
+  properties:
+    email:
+      type: string
+      required: true
+    password:
+      type: string
+      required: true
+    name:
+      type: string
+      required: true
+  required:
+    - email
+    - password
+    - name

@@ -1,0 +1,39 @@
+signin:
+  post:
+    summary: Sign in
+    description: Signs in a user.
+    tags:
+      - Auth
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/auth.yaml#/signin'
+    responses:
+      '200':
+        description: User signed in successfully
+        content:
+          application/json:
+            schema:
+              $ref: '../components/auth.yaml#/signin'
+
+signup:
+  post:
+    summary: Sign up
+    description: Signs up a new user.
+    tags:
+      - Auth
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/auth.yaml#/signup'
+    responses:
+      '201':
+        description: User signed up successfully
+        content:
+          application/json:
+            schema:
+              $ref: '../components/auth.yaml#/signup'

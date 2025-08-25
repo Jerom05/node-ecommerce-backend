@@ -12,3 +12,18 @@ components:
 
 servers:
   - url: http://localhost:3000
+
+paths:
+  # Auth
+  /api/auth/signup:
+    $ref: './paths/auth.yaml#/signup'
+  /api/auth/signin:
+    $ref: './paths/auth.yaml#/signin'
+
+  # User
+  /api/users:
+    $ref: './paths/user.yaml#/users'
+  /api/users/{id}:
+    $ref: './paths/user.yaml#/user'
+  /api/users/me:
+    $ref: './paths/user.yaml#/me'
