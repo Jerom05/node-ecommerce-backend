@@ -2,16 +2,6 @@ import bcrypt from 'bcryptjs';
 import User from '../models/user.model.js';
 import _ from 'lodash';
 
-export const getAllUsers = async () => {
-  const users = await User.find();
-  return users;
-};
-
-export const getUserById = async (id) => {
-  const user = await User.findById(id);
-  return user;
-};
-
 export const updateUser = async (req, res, session) => {
   const { id } = req.params;
 
