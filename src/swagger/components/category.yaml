@@ -1,0 +1,21 @@
+create:
+  type: object
+  required:
+    - title
+  properties:
+    title:
+      type: string
+      required: true
+    description:
+      type: string
+      required: false
+
+update:
+  type: object
+  properties:
+    title:
+      type: string
+      required: false
+    description:
+      type: string
+      required: false

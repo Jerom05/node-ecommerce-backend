@@ -27,3 +27,9 @@ paths:
     $ref: './paths/user.yaml#/user'
   /api/users/me:
     $ref: './paths/user.yaml#/me'
+
+  # Category
+  /api/categories:
+    $ref: './paths/category.yaml#/categories'
+  /api/categories/{id}:
+    $ref: './paths/category.yaml#/category'
