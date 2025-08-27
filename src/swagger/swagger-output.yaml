@@ -272,3 +272,286 @@ paths:
       responses:
         '200':
           description: Category deleted successfully
+  /api/products:
+    post:
+      summary: Create a new product
+      description: 'Creates a new product with title, description, price, stock, and optional images.'
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Product created successfully
+                  data:
+                    type: object
+                    $ref: '#/paths/~1api~1products/post/requestBody/content/multipart~1form-data/schema'
+    get:
+      summary: Get all products
+      description: 'Fetches a list of products with optional filtering, searching, and pagination.'
+      tags:
+        - Products
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 10
+        - name: category_id
+          in: query
+          description: Filter by category ID
+          required: false
+          schema:
+            type: string
+        - name: search_keyword
+          in: query
+          description: Search products by title or description (case-insensitive)
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response with product list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/paths/~1api~1products/post/requestBody/content/multipart~1form-data/schema'
+                  meta_data:
+                    type: object
+                    properties:
+                      total_data:
+                        type: integer
+                        example: 100
+                      filtered_data:
+                        type: integer
+                        example: 10
+  '/api/products/{id}':
+    get:
+      summary: Get a product by ID
+      description: Retrieves a product by its ID.
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product found successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1api~1products/post/requestBody/content/multipart~1form-data/schema'
+    put:
+      summary: Update an existing product
+      description: 'Updates an existing product with title, description, price, stock, and optional images.'
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Wireless Mouse
+                description:
+                  type: string
+                  example: High-quality wireless mouse with ergonomic design
+                category_id:
+                  type: string
+                  example: '1234567890'
+                price:
+                  type: number
+                  example: 50
+                stock:
+                  type: number
+                  example: 100
+                thumbnail:
+                  type: string
+                  format: binary
+                  description: Product thumbnail image (single file)
+                product_feature_images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: Multiple feature images (max 5 files)
+              required:
+                - title
+                - description
+                - category_id
+                - price
+                - stock
+      responses:
+        '200':
+          description: Product updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1api~1products/post/requestBody/content/multipart~1form-data/schema'
+    delete:
+      summary: Delete a product
+      description: Deletes a product.
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product deleted successfully
+  '/api/products/{id}/thumbnail':
+    put:
+      summary: Change the thumbnail image of a product
+      description: Changes the thumbnail image of a product.
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                thumbnail:
+                  type: string
+                  format: binary
+                  description: Product thumbnail image (single file)
+              required:
+                - thumbnail
+      responses:
+        '200':
+          description: Product updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1api~1products/post/requestBody/content/multipart~1form-data/schema'
+    delete:
+      summary: Remove the thumbnail image of a product
+      description: Removes the thumbnail image of a product.
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product thumbnail removed successfully
+  '/api/products/{id}/images':
+    post:
+      summary: Add feature images to a product
+      description: Adds feature images to a product.
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                product_feature_images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: Multiple feature images (max 5 files)
+              required:
+                - product_feature_images
+      responses:
+        '200':
+          description: Product feature images added successfully
+    delete:
+      summary: Remove feature images from a product
+      description: Removes feature images from a product.
+      tags:
+        - Products
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                public_ids:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: Product feature images removed successfully

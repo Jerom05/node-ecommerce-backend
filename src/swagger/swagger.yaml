@@ -33,3 +33,13 @@ paths:
     $ref: './paths/category.yaml#/categories'
   /api/categories/{id}:
     $ref: './paths/category.yaml#/category'
+
+  # Product
+  /api/products:
+    $ref: './paths/product.yaml#/products'
+  /api/products/{id}:
+    $ref: './paths/product.yaml#/product'
+  /api/products/{id}/thumbnail:
+    $ref: './paths/product.yaml#/thumbnail'
+  /api/products/{id}/images:
+    $ref: './paths/product.yaml#/images'
