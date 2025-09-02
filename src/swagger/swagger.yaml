@@ -43,3 +43,9 @@ paths:
     $ref: './paths/product.yaml#/thumbnail'
   /api/products/{id}/images:
     $ref: './paths/product.yaml#/images'
+
+  # Order
+  /api/orders:
+    $ref: './paths/order.yaml#/orders'
+  /api/orders/{id}:
+    $ref: './paths/order.yaml#/order'

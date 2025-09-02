@@ -555,3 +555,171 @@ paths:
       responses:
         '200':
           description: Product feature images removed successfully
+  /api/orders:
+    post:
+      tags:
+        - Order
+      summary: Create a new order
+      description: Create a new order.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                phone:
+                  type: string
+                other_contact:
+                  type: string
+                email:
+                  type: string
+                comments:
+                  type: string
+                shipping_address:
+                  type: string
+                products:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      product_id:
+                        type: string
+                      quantity:
+                        type: integer
+      responses:
+        '201':
+          description: Order created successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: ID of the created order.
+                  productId:
+                    type: string
+                    description: ID of the ordered product.
+                  quantity:
+                    type: integer
+                    description: Quantity of the ordered product.
+                  status:
+                    type: string
+                    description: Status of the order.
+        '400':
+          description: Bad request. Invalid input data.
+        '401':
+          description: Unauthorized. Authentication required.
+        '500':
+          description: Internal server error.
+    get:
+      tags:
+        - Order
+      security:
+        - bearerAuth: []
+      summary: Get all orders
+      description: Retrieve a list of all orders. Admin access required.
+      responses:
+        '200':
+          description: A list of orders.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/paths/~1api~1orders/post/requestBody/content/application~1json/schema'
+  '/api/orders/{id}':
+    put:
+      tags:
+        - Order
+      security:
+        - bearerAuth: []
+      summary: Update an existing order
+      description: Update an existing order by ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the order to update.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                phone:
+                  type: string
+                other_contact:
+                  type: string
+                email:
+                  type: string
+                comments:
+                  type: string
+                shipping_address:
+                  type: string
+                status:
+                  type: string
+                  enum:
+                    - pending
+                    - confirmed
+                    - shipped
+                    - delivered
+                    - cancelled
+                payment_status:
+                  type: string
+                  enum:
+                    - pending
+                    - paid
+      responses:
+        '200':
+          description: Order updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1api~1orders/post/requestBody/content/application~1json/schema'
+    delete:
+      tags:
+        - Order
+      security:
+        - bearerAuth: []
+      summary: Delete an order
+      description: Delete an order by ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the order to delete.
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Order deleted successfully.
+    get:
+      tags:
+        - Order
+      security:
+        - bearerAuth: []
+      summary: Get an order by ID
+      description: Retrieve an order by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the order to retrieve.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Order retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1api~1orders/post/requestBody/content/application~1json/schema'

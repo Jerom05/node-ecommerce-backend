@@ -1,0 +1,46 @@
+order:
+  type: object
+  properties:
+    name:
+      type: string
+    phone:
+      type: string
+    other_contact:
+      type: string
+    email:
+      type: string
+    comments:
+      type: string
+    shipping_address:
+      type: string
+    products:
+      type: array
+      items:
+        type: object
+        properties:
+          product_id:
+            type: string
+          quantity:
+            type: integer
+
+updateOrder:
+  type: object
+  properties:
+    name:
+      type: string
+    phone:
+      type: string
+    other_contact:
+      type: string
+    email:
+      type: string
+    comments:
+      type: string
+    shipping_address:
+      type: string
+    status:
+      type: string
+      enum: [pending, confirmed, shipped, delivered, cancelled]
+    payment_status:
+      type: string
+      enum: [pending, paid]

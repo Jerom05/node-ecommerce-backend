@@ -1,0 +1,120 @@
+orders:
+  post:
+    tags:
+      - Order
+    summary: Create a new order
+    description: Create a new order.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/order.yaml#/order'
+    responses:
+      '201':
+        description: Order created successfully.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: ID of the created order.
+                productId:
+                  type: string
+                  description: ID of the ordered product.
+                quantity:
+                  type: integer
+                  description: Quantity of the ordered product.
+                status:
+                  type: string
+                  description: Status of the order.
+      '400':
+        description: Bad request. Invalid input data.
+      '401':
+        description: Unauthorized. Authentication required.
+      '500':
+        description: Internal server error.
+  get:
+    tags:
+      - Order
+    security:
+      - bearerAuth: []
+    summary: Get all orders
+    description: Retrieve a list of all orders. Admin access required.
+    responses:
+      '200':
+        description: A list of orders.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '../components/order.yaml#/order'
+order:
+  put:
+    tags:
+      - Order
+    security:
+      - bearerAuth: []
+    summary: Update an existing order
+    description: Update an existing order by ID.
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the order to update.
+        schema:
+          type: string
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../components/order.yaml#/updateOrder'
+    responses:
+      '200':
+        description: Order updated successfully.
+        content:
+          application/json:
+            schema:
+              $ref: '../components/order.yaml#/order'
+  delete:
+    tags:
+      - Order
+    security:
+      - bearerAuth: []
+    summary: Delete an order
+    description: Delete an order by ID.
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the order to delete.
+        schema:
+          type: string
+    responses:
+      '204':
+        description: Order deleted successfully.
+  get:
+    tags:
+      - Order
+    security:
+      - bearerAuth: []
+    summary: Get an order by ID
+    description: Retrieve an order by its ID.
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID of the order to retrieve.
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Order retrieved successfully.
+        content:
+          application/json:
+            schema:
+              $ref: '../components/order.yaml#/order'
