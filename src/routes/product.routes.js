@@ -6,6 +6,7 @@ import {
   requireRoles,
   validateRequest,
   cache,
+  cacheClearEvent,
 } from '../middlewares/index.js';
 import { createProductSchema } from '../validators/product.validation.js';
 import { productController } from '../controllers/index.js';
@@ -22,6 +23,7 @@ router.post(
     { name: 'product_feature_images', maxCount: 5 },
   ]),
   validateRequest(createProductSchema, 'body'),
+  cacheClearEvent('product:changed'),
   productController.createProduct
 );
 
