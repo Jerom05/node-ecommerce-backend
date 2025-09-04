@@ -9,6 +9,7 @@ import routes from './routes/index.js';
 import { handleNotFound, errorHandler } from './middlewares/index.js';
 import { connectDB } from './config/index.js';
 import { connectRedis } from './utils/redis-client.js';
+import './utils/cache-listener.js';
 
 const app = express();
 
