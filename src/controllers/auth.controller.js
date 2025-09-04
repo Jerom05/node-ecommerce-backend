@@ -1,4 +1,4 @@
-import { withTransaction } from '../utils/withTransaction.js';
+import { withTransaction } from '../utils/with-transaction.js';
 import { authService } from '../services/index.js';
 
 export const signup = async (req, res) => {

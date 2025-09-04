@@ -1,4 +1,4 @@
-import { withTransaction } from '../utils/withTransaction.js';
+import { withTransaction } from '../utils/with-transaction.js';
 import { categoryService } from '../services/index.js';
 import { categoryQuery } from '../queries/index.js';
 

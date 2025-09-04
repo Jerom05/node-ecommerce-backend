@@ -1,6 +1,6 @@
 import { productService } from '../services/index.js';
 import { productQuery } from '../queries/index.js';
-import { withTransaction } from '../utils/withTransaction.js';
+import { withTransaction } from '../utils/with-transaction.js';
 
 export const createProduct = async (req, res) => {
   await withTransaction(async (session) => {

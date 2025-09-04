@@ -1,6 +1,6 @@
 import { orderService } from '../services/index.js';
 import { orderQuery } from '../queries/index.js';
-import { withTransaction } from '../utils/withTransaction.js';
+import { withTransaction } from '../utils/with-transaction.js';
 
 export const createOrder = async (req, res) => {
   await withTransaction(async (session) => {
