@@ -11,6 +11,7 @@ A robust, scalable, and secure **RESTful API** for managing single-vendor e-comm
 - **Authentication:** JWT
 - **File Uploads:** Cloudinary
 - **API Documentation:** Swagger
+- **Redis** server for caching (Optional)
 
 ---
 
@@ -57,6 +58,9 @@ CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 CLOUDINARY_FOLDER=your_folder_name
 
+# Redis (optional)
+REDIS_URL=redis_server_url(local or cloud)
+
 ```
 
 **Start the server**
@@ -70,6 +74,20 @@ Server will run on:
 ```
 http://localhost:3000
 ```
+
+---
+
+## **Redis Caching (Optional)**
+
+- If a `REDIS_URL` is provided in the `.env`, the app will:
+  - Connect to Redis at startup.
+  - Use caching middleware for performance.
+  - Support **event-driven cache invalidation** (cache is cleared automatically whenever CRUD operations (create, update, delete) occur).
+- If `REDIS_URL` is **not set**, Redis will be skipped and the app will run without caching.
+
+This ensures caching is **optional** and does not block development or deployment.
+
+---
 
 ---
 
