@@ -1,7 +1,8 @@
 import redisClient from '../utils/redis-client.js';
+import eventBus from '../utils/event-bus.js';
 
 export const cache =
-  (ttl = 60) =>
+  (ttl = 300) =>
   async (req, res, next) => {
     if (!process.env.REDIS_URL) {
       console.log('Redis URL not set, skipping cache middleware');
@@ -23,3 +24,20 @@ export const cache =
 
     next();
   };
+
+export const cacheClearEvent = (event) => async (req, res, next) => {
+  if (!process.env.REDIS_URL) {
+    console.log('Redis URL not set, skipping cache clear middleware');
+    return next();
+  }
+
+  const originalJson = res.json.bind(res);
+  res.json = async (body) => {
+    if (!body.error) {
+      console.log('Clearing Redis Cache', event);
+      eventBus.emit(event);
+    }
+    originalJson(body);
+  };
+  next();
+};
