@@ -1,7 +1,12 @@
 import { Router } from 'express';
 
 import { upload } from '../config/index.js';
-import { auth, requireRoles, validateRequest } from '../middlewares/index.js';
+import {
+  auth,
+  requireRoles,
+  validateRequest,
+  cache,
+} from '../middlewares/index.js';
 import { createProductSchema } from '../validators/product.validation.js';
 import { productController } from '../controllers/index.js';
 
@@ -21,7 +26,7 @@ router.post(
 );
 
 // Get all products
-router.get('/', productController.getProducts);
+router.get('/', cache(), productController.getProducts);
 
 // Get product by id
 router.get('/:id', productController.getAProduct);
