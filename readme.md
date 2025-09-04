@@ -82,7 +82,7 @@ http://localhost:3000
 - If a `REDIS_URL` is provided in the `.env`, the app will:
   - Connect to Redis at startup.
   - Use caching middleware for performance.
-  - Support **event-driven cache invalidation** (cache is cleared automatically whenever CRUD operations (create, update, delete) occur).
+  - Support **event-driven cache invalidation** (cache is cleared automatically whenever CRUD operations occur).
 - If `REDIS_URL` is **not set**, Redis will be skipped and the app will run without caching.
 
 This ensures caching is **optional** and does not block development or deployment.
