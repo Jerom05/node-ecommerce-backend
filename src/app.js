@@ -3,16 +3,18 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
 import swaggerUi from 'swagger-ui-express';
+import YAML from 'yamljs';
 
 import routes from './routes/index.js';
 import { handleNotFound, errorHandler } from './middlewares/index.js';
 import { connectDB } from './config/index.js';
-import YAML from 'yamljs';
+import { connectRedis } from './utils/redis-client.js';
 
 const app = express();
 
 dotenv.config();
 connectDB();
+if (process.env.REDIS_URL) await connectRedis();
 
 app.use(cors());
 app.use(helmet());
