@@ -31,13 +31,14 @@ router.post(
 router.get('/', cache(), productController.getProducts);
 
 // Get product by id
-router.get('/:id', productController.getAProduct);
+router.get('/:id', cache(60), productController.getAProduct);
 
 // Update product
 router.put(
   '/:id',
   auth,
   requireRoles(['ADMIN']),
+  cacheClearEvent('product:changed'),
   productController.updateProduct
 );
 
@@ -46,6 +47,7 @@ router.delete(
   '/:id',
   auth,
   requireRoles(['ADMIN']),
+  cacheClearEvent('product:changed'),
   productController.deleteProduct
 );
 
@@ -55,6 +57,7 @@ router.put(
   auth,
   requireRoles(['ADMIN']),
   upload.single('thumbnail'),
+  cacheClearEvent('product:changed'),
   productController.changeProductThumbnail
 );
 
@@ -63,6 +66,7 @@ router.delete(
   '/:id/thumbnail',
   auth,
   requireRoles(['ADMIN']),
+  cacheClearEvent('product:changed'),
   productController.removeProductThumbnail
 );
 
@@ -72,6 +76,7 @@ router.post(
   auth,
   requireRoles(['ADMIN']),
   upload.fields([{ name: 'product_feature_images', maxCount: 5 }]),
+  cacheClearEvent('product:changed'),
   productController.addProductImages
 );
 
@@ -80,6 +85,7 @@ router.delete(
   '/:id/images',
   auth,
   requireRoles(['ADMIN']),
+  cacheClearEvent('product:changed'),
   productController.removeProductImage
 );
 
