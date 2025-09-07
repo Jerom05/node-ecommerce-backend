@@ -1,7 +1,12 @@
 import { Router } from 'express';
 
 import { orderController } from '../controllers/index.js';
-import { auth, requireRoles, validateRequest } from '../middlewares/index.js';
+import {
+  auth,
+  cache,
+  requireRoles,
+  validateRequest,
+} from '../middlewares/index.js';
 import { createOrderSchema } from '../validators/order.validation.js';
 
 const router = Router();
@@ -22,5 +27,11 @@ router.delete(
 );
 
 router.get('/:id', auth, orderController.getOrderById);
-router.get('/', auth, requireRoles(['ADMIN']), orderController.getOrders);
+router.get(
+  '/',
+  auth,
+  requireRoles(['ADMIN']),
+  cache(),
+  orderController.getOrders
+);
 export default router;
