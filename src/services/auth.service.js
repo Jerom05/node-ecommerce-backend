@@ -25,6 +25,11 @@ export const signup = async (req, res, session) => {
   });
   await newUser.save({ session });
   const access_token = signToken(newUser);
+  res.cookie('access_token', access_token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'Strict',
+  });
 
   res.status(201).json({
     status: 'success',
@@ -51,6 +56,12 @@ export const signin = async (req, res) => {
     return res.status(401).json({ message: 'Invalid email or password' });
 
   const access_token = signToken(user);
+
+  res.cookie('access_token', access_token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'Strict',
+  });
 
   res.status(200).json({
     status: 'success',
