@@ -9,3 +9,12 @@ eventBus.on('product:changed', async () => {
     console.log(`Cleared ${keys.length} product cache keys (event-driven)`);
   }
 });
+
+eventBus.on('user:updated', async () => {
+  const keys = await redisClient.keys('*users*');
+  console.log('Event received: user:changed');
+  if (keys.length > 0) {
+    await redisClient.del(keys);
+    console.log(`Cleared ${keys.length} user cache keys (event-driven)`);
+  }
+});
